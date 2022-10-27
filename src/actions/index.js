@@ -4,7 +4,7 @@ export const heroesFetching = () => ({
 
 export const heroesFetched = (heroes) => ({
         type: 'HEROES_FETCHED',
-        payload: heroes
+        payload: heroes,
 })
 
 export const heroesFetchingError = () => ({
@@ -15,4 +15,9 @@ export const heroDeleted = (id) => ({
         type: 'HERO_DELETED',
         payload: id,
     
+})
+
+export const heroCreated = (hero) => ({
+        type: 'HERO_CREATED',
+        payload: hero,
 })
