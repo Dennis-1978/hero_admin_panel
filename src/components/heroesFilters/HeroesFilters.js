@@ -4,11 +4,7 @@ import classNames from 'classnames';
 
 import Spinner from '../spinner/Spinner';
 import { useHttp } from '../../hooks/http.hook';
-import { filtersFetching,
-         filtersFetchingError, 
-         filtersFetched,
-         activeFilterChanged,
-        } from '../../actions';
+import { activeFilterChanged, fetchFilters } from '../../actions';
 
 const HeroesFilters = () => {
     const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
@@ -16,10 +12,7 @@ const HeroesFilters = () => {
     const {request} = useHttp();
 
     useEffect(() => {
-        dispatch(filtersFetching());
-        request("http://localhost:3001/filters")
-            .then(data => dispatch(filtersFetched(data)))
-            .catch(err => dispatch(filtersFetchingError()))
+        dispatch(fetchFilters(request));
     }, []);
 
     if (filtersLoadingStatus === "loading") {
