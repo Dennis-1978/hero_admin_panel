@@ -2,12 +2,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
+import store from '../../store';
 import { heroCreated } from '../heroesList/heroesSlice';
 import { useHttp } from '../../hooks/http.hook';
-
-// Дополнительно:
-// Элементы <option></option> желательно сформировать на базе
-// данных из фильтров
+import { selectAll } from '../heroesFilters/filtersSlice';
 
 const HeroesAddForm = () => {
 
@@ -15,7 +13,8 @@ const HeroesAddForm = () => {
     const [heroDescr, setHeroDescr] = useState('');
     const [heroElement, setHeroElement] = useState('');
 
-    const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
+    const {filtersLoadingStatus} = useSelector(state => state.filters);
+    const filters = selectAll(store.getState())
     const dispatch = useDispatch();
     const {request} = useHttp();
 
@@ -68,7 +67,7 @@ const HeroesAddForm = () => {
                     id="name" 
                     placeholder="Как меня зовут?"
                     value={heroName}
-                    onChange={(e) => setHeroName(e.target.value)}
+                    onChange={(event) => setHeroName(event.target.value)}
                     />
             </div>
 
@@ -82,7 +81,7 @@ const HeroesAddForm = () => {
                     placeholder="Что я умею?"
                     style={{"height": '130px'}}
                     value={heroDescr}
-                    onChange={(e) => setHeroDescr(e.target.value)}
+                    onChange={(event) => setHeroDescr(event.target.value)}
                     />
             </div>
 
@@ -94,7 +93,7 @@ const HeroesAddForm = () => {
                     id="element" 
                     name="element"
                     value={heroElement}
-                    onChange={(e) => setHeroElement(e.target.value)}>
+                    onChange={(event) => setHeroElement(event.target.value)}>
                     <option>Я владею элементом...</option>
                     {renderFilters(filters, filtersLoadingStatus)}
                 </select>
